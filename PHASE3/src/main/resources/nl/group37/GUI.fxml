@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="498.0" prefWidth="883.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.group37.gui.controllers.guiController">
+   <children>
+      <Pane prefHeight="498.0" prefWidth="883.0">
+         <children>
+            <ImageView fitHeight="545.0" fitWidth="886.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/background.jpg" />
+               </image>
+            </ImageView>
+            <ButtonBar layoutX="72.0" layoutY="10.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="883.0">
+              <buttons>
+                  <Button mnemonicParsing="false" onAction="#method4" text="Green">
+                      <font>
+                      <Font name="Arial" size="13.0" />
+                  </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#method3" text="Red">
+                      <font>
+                          <Font name="Arial" size="13.0" />
+                      </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#method2" text="Blue">
+                      <font>
+                          <Font name="Arial" size="13.0" />
+                      </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#method1" text="Expand">
+                      <font>
+                          <Font name="Arial" size="13.0" />
+                      </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#runAlgorithm2" text="Parcels">
+                      <font>
+                          <Font name="Arial" size="13.0" />
+                      </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#runAlgorithm" text="Pentominoes">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font></Button>
+              </buttons>
+            </ButtonBar>
+            <Label fx:id="testLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="667.0" layoutY="3.0" prefHeight="53.0" prefWidth="213.0" text="Label" textFill="WHITE" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="valueLabel" layoutX="60.0" layoutY="470.0" prefHeight="17.0" prefWidth="257.0" text="Total value" textFill="WHITE" visible="true">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <Pane layoutX="32.0" layoutY="64.0" prefHeight="400.0" prefWidth="818.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
