@@ -9,18 +9,11 @@ import java.util.Stack;
 
 public class Search3D {
     private Stack<Node> solutionStack = new Stack<Node>();
-
-    private Node root;
+    private final Node root;
     private boolean done;
-    //private int count;
-
     private int cargoValue;
     private int maxValue;
-    //private int c;
 
-    public static int[][][] output1;
-
-    public static int[][][] solutionWithoutGaps;
 
     public Search3D(Node root) {
         System.out.println("Search initialized");
@@ -28,13 +21,12 @@ public class Search3D {
         this.done = false;
         this.cargoValue = 0;
         this.maxValue = 0;
-        //this.c = 0;
     }
 
 
     public void search() {
         //If R[h] = h, print the current solution (see below) and return.
-        if (root.getRightNode() == root) {
+        if (root.rightNode == root) {
             this.done = true;
             printSolution();
             return;
@@ -51,7 +43,7 @@ public class Search3D {
             //for each j <- R[r], R[R[r], ..., while j != r
             for (Node j = r.rightNode; j != r; j = j.rightNode) {
                 // cover column j
-                cover(j.getHeader());
+                cover(j.header);
             }
             if (!this.done) {
                 search();
@@ -70,7 +62,7 @@ public class Search3D {
             //for each j ← L[r], L[L[r]], ..., while j != r
             for (Node j = r.leftNode; j != r; j = j.leftNode) {
                 //uncover column j
-                uncover(j.getHeader());
+                uncover(j.header);
             }
         }
         //uncover column c
@@ -126,10 +118,10 @@ public class Search3D {
         int s = 99999999;
         Node c = null;
 
-        for (Node n = root.getRightNode(); n != root; n = n.getRightNode()) {
-            Header h = n.getHeader();
-            if (h.getSize() < s) {
-                s = h.getSize();
+        for (Node n = root.rightNode; n != root; n = n.rightNode) {
+            Header h = n.header;
+            if (h.size < s) {
+                s = h.size;
                 c = h;
             }
         }
@@ -162,12 +154,12 @@ public class Search3D {
             Node n = solutionStack.get(i);
             Node start = n;
             do {
-                int index = Integer.parseInt(n.getHeader().getName());
+                int index = Integer.parseInt(n.header.name);
                 int identifier = getIdentifier(n.type);
                 int[] coords = getCoordinatesForIndex(index);
                 output[coords[0]][coords[1]][coords[2]] = identifier;
                 fieldsFilled++;
-                n = n.getRightNode();
+                n = n.rightNode;
             }
             while (n != start);
         }

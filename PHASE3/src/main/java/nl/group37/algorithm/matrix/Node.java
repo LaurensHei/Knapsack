@@ -8,34 +8,4 @@ public class Node {
     public Header header;
     public char type;
 
-    public void setLeftNode(Node leftNode) {
-        this.leftNode = leftNode;
-    }
-
-    public Node getRightNode() {
-        return rightNode;
-    }
-
-    public void setRightNode(Node rightNode) {
-        this.rightNode = rightNode;
-    }
-
-    public Node getUpNode() {
-        return upNode;
-    }
-
-    public void setUpNode(Node upNode) {
-        this.upNode = upNode;
-    }
-    public void setDownNode(Node downNode) {
-        this.downNode = downNode;
-    }
-    public Header getHeader() {
-        return header;
-    }
-    public void setHeader(Header header) {
-        this.header = header;
-    }
-
-
 }

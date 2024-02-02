@@ -17,8 +17,8 @@ public class ParcelMatrix3D {
     public ParcelMatrix3D(int height, int width, int depth) {
         //create root node, connect left and right to itself
         this.root = new Node();
-        root.setRightNode(root);
-        root.setLeftNode(root);
+        root.rightNode = root;
+        root.leftNode = root;
         //set current node to root
         this.current = root;
 
@@ -36,7 +36,7 @@ public class ParcelMatrix3D {
 
     private void addNodes() {
         //set our current pointer to the first column (starting from the left)
-        current = root.getRightNode();
+        current = root.rightNode;
 
         //count rows added
         int c = 0;
@@ -76,13 +76,13 @@ public class ParcelMatrix3D {
 
         Node first = new Node();
         Node c = new Node();
-        while (next.getRightNode() != root) {
-            next = next.getRightNode();
+        while (next.rightNode != root) {
+            next = next.rightNode;
             //columnIndex++;
 
             //loop columns and check if next is equal to column
             for (int column : columns) {
-                if (next.getHeader().getName().equals(Integer.toString(column))) {
+                if (next.header.name.equals(Integer.toString(column))) {
 
                     //next is equal to a column in our list columns[]
                     Node n = new Node();
@@ -93,29 +93,29 @@ public class ParcelMatrix3D {
                         c = n;
                     }
 
-                    n.setHeader(next.getHeader());
+                    n.header = next.header;
                     n.header.size++;
 
                     n.type = identifier;
 
-                    n.setRightNode(first);
-                    n.setLeftNode(c);
+                    n.rightNode = first;
+                    n.leftNode = c;
 
-                    c.setRightNode(n);
+                    c.rightNode = n;
                     c = n;
 
                     //connect the last vertical element in column with new node
-                    Node verticalBottom = next.getHeader().getUpNode();
-                    verticalBottom.setDownNode(n);
+                    Node verticalBottom = next.header.upNode;
+                    verticalBottom.downNode = n;
 
-                    n.setUpNode(verticalBottom);
-                    n.setDownNode(next.getHeader());
-                    next.getHeader().setUpNode(n);
+                    n.upNode = verticalBottom;
+                    n.downNode = next.header;
+                    next.header.upNode = n;
 
                 }
             }
         }
-        first.setLeftNode(c);
+        first.leftNode = c;
     }
 
 
@@ -139,17 +139,17 @@ public class ParcelMatrix3D {
         //loop through every column of our matrix
         for (int i = 1; i <= amount; i++) {
             Header columnHeader = new Header(String.valueOf(i));
-            current.setRightNode(columnHeader);
-            columnHeader.setLeftNode(current);
-            columnHeader.setHeader(columnHeader);
+            current.rightNode = columnHeader;
+            columnHeader.leftNode = current;
+            columnHeader.header = columnHeader;
 
-            columnHeader.setUpNode(columnHeader);
-            columnHeader.setDownNode(columnHeader);
+            columnHeader.upNode = columnHeader;
+            columnHeader.downNode = columnHeader;
 
             current = columnHeader;
         }
-        current.setRightNode(root);
-        root.setLeftNode(current);
+        current.rightNode = root;
+        root.leftNode = current;
 
         current = root;
     }

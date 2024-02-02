@@ -1,3 +1,10 @@
+/**
+ * This class had the purpose to build the matrix for the 2d pentomino problem.
+ * The class is not used by the final program. It was created to fist try the
+ * algorithm on the 2d pentomino problem.
+ */
+
+
 package nl.group37.algorithm.matrix;
 
 import java.util.Arrays;
@@ -9,8 +16,8 @@ public class Matrix {
 
     public Matrix(String[] names) {
         this.root = new Node();
-        root.setLeftNode(root);
-        root.setRightNode(root);
+        root.leftNode = root;
+        root.rightNode = root;
         this.current = root;
         this.names = names;
     }
@@ -22,18 +29,18 @@ public class Matrix {
     }
 
     private void addNodes(int[][] matrix) {
-        current = root.getRightNode();
+        current = root.rightNode;
 
         //creating a vertical current node for each column
         Node[] vCurrentNodes = new Node[matrix[0].length];
         //fill the current nodes with the headers respectively as starting point
         for (int i = 0; i < vCurrentNodes.length; i++) {
             vCurrentNodes[i] = current;
-            current = current.getRightNode();
+            current = current.rightNode;
         }
 
         //set our current pointer to the first column (starting from the left)
-        current = root.getRightNode();
+        current = root.rightNode;
 
         //loop over matrix rows
         for (int i = 0; i < matrix.length; i++) {
@@ -52,11 +59,11 @@ public class Matrix {
 
                     //create a new node and first connect the header pointer to the current columns header
                     Node n = new Node();
-                    n.setHeader(current.getHeader());
+                    n.header = current.header;
 
                     //in the header element, increase the number of nodes in that column. we need that to find
                     //columns with the least amount of nodes for the algorithm
-                    current.getHeader().increase();
+                    current.header.size++;
 
                     //if the hFirstNode is null, that means, it is the first node in this row. we set first node and c node
                     //to our node n.
@@ -66,34 +73,34 @@ public class Matrix {
                     }
 
                     //connect top and bottom
-                    n.setUpNode(vCurrentNodes[j]);
-                    vCurrentNodes[j].setDownNode(n);
+                    n.upNode = vCurrentNodes[j];
+                    vCurrentNodes[j].downNode = n;
                     vCurrentNodes[j] = n;
 
                     // connect left and right
-                    n.setLeftNode(hCurrentNode);
-                    hCurrentNode.setRightNode(n);
+                    n.leftNode = hCurrentNode;
+                    hCurrentNode.rightNode = n;
                     hCurrentNode = n;
 
 
                 }
                 //move our column pointer to the right to move on with the next column
-                current = current.getRightNode();
+                current = current.rightNode;
             }
             //connect first and current horizontal nodes to create the circular linked list
-            hCurrentNode.setRightNode(hFirstNode);
-            hFirstNode.setLeftNode(hCurrentNode);
+            hCurrentNode.rightNode = hFirstNode;
+            hFirstNode.leftNode = hCurrentNode;
 
             //since we now go to the next row, we have to reset our column pointer to the beginning
-            current = root.getRightNode();
+            current = root.rightNode;
         }
 
 
         //after looping through all rows, we have to connect the nodes on the bottom of every column to
         //the header nodes and all the way around to create the circular linked list also vertically
         for (int i = 0; i < vCurrentNodes.length; i++) {
-            vCurrentNodes[i].setDownNode(vCurrentNodes[i].getHeader());
-            vCurrentNodes[i].getHeader().setUpNode(vCurrentNodes[i]);
+            vCurrentNodes[i].downNode = vCurrentNodes[i].header;
+            vCurrentNodes[i].header.upNode = vCurrentNodes[i];
         }
     }
 
@@ -102,14 +109,14 @@ public class Matrix {
         for (int i = 0; i < matrix[0].length; i++) {
             //create a header for every column and name it
             Header columnHeader = new Header(names[i]);
-            current.setRightNode(columnHeader);
-            columnHeader.setLeftNode(current);
-            columnHeader.setHeader(columnHeader);
+            current.rightNode = columnHeader;
+            columnHeader.leftNode = current;
+            columnHeader.header = columnHeader;
             current = columnHeader;
         }
 
-        current.setRightNode(root);
-        root.setLeftNode(current);
+        current.rightNode = root;
+        root.leftNode = current;
 
         current = root;
     }
