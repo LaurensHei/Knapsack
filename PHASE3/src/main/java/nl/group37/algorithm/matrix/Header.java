@@ -5,7 +5,6 @@ public class Header extends Node {
     public int size;
 
     public Header() {
-        //don't delete
     }
 
     public Header(String name) {

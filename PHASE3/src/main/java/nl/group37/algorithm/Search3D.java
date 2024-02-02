@@ -14,7 +14,7 @@ public class Search3D {
     private boolean done;
     //private int count;
 
-    private int cargo_value;
+    private int cargoValue;
     private int maxValue;
     //private int c;
 
@@ -26,52 +26,28 @@ public class Search3D {
         System.out.println("Search initialized");
         this.root = root;
         this.done = false;
-        this.cargo_value = 0;
+        this.cargoValue = 0;
         this.maxValue = 0;
         //this.c = 0;
-    }
-
-    public int getValue(Node n) {
-        switch (n.type) {
-            case 'A':
-                return 3;
-            case 'B':
-                return 4;
-            case 'C':
-                return 5;
-            case 'L':
-                return 3;
-            case 'P':
-                return 4;
-            case 'T':
-                return 5;
-            default:
-                return 0;
-        }
     }
 
 
     public void search() {
         //If R[h] = h, print the current solution (see below) and return.
         if (root.getRightNode() == root) {
-
             this.done = true;
             printSolution();
-            //countSolution();
             return;
         }
-
         //Otherwise choose a column object c (see below).
         Node c = chooseSmallestColumn();
-
         //cover column c
         cover(c);
-
         //For each r ← D[c], D[D[c]], ..., while r != c, set O[k] ← r
         for (Node r = c.downNode; r != c; r = r.downNode) {
             //set Ok ← r;
             solutionStack.push(r);
-            cargo_value += getValue(r);
+            cargoValue += getValue(r);
             //for each j <- R[r], R[R[r], ..., while j != r
             for (Node j = r.rightNode; j != r; j = j.rightNode) {
                 // cover column j
@@ -81,15 +57,15 @@ public class Search3D {
                 search();
             }
             //set r ← Ok and c ← C[r];
-            if(cargo_value > maxValue) {
-                maxValue = cargo_value;
-                System.out.println("Max Value Found " + maxValue);
+            if (cargoValue > maxValue) {
+                maxValue = cargoValue;
+                System.out.println("Value: " + maxValue);
 
                 //print partial solution
-                printPartialSolution();
+                printSolution();
             }
             solutionStack.pop();
-            cargo_value -= getValue(r);
+            cargoValue -= getValue(r);
             c = r.header;
             //for each j ← L[r], L[L[r]], ..., while j != r
             for (Node j = r.leftNode; j != r; j = j.leftNode) {
@@ -160,34 +136,6 @@ public class Search3D {
         return c;
     }
 
-    public void printPartialSolution() {
-        int[][][] output = new int[8][5][33];
-        int fieldsFilled = 0;
-        for(int i = 0; i < solutionStack.size(); i++) {
-            Node n = solutionStack.get(i);
-            Node start = n;
-            do {
-                int index = Integer.parseInt(n.getHeader().getName());
-                int identifier = getIdentifier(n.type);
-                int[] coords = getCoordinatesForIndex(index);
-                output[coords[0]][coords[1]][coords[2]] = identifier;
-                fieldsFilled++;
-                n = n.getRightNode();
-            }
-            while(n != start);
-        }
-        System.out.println("Solution found with " + (1320-fieldsFilled) + " gaps.");
-        Platform.runLater(() -> {
-            GUI.update(output,50);
-            GUI.updateMax(maxValue);
-            output1=output;
-        });
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
     // Get coordinates (i, j, k) for a given index
     private int[] getCoordinatesForIndex(int index) {
         int[] coordinates = new int[3];
@@ -207,19 +155,42 @@ public class Search3D {
         return coordinates;
     }
 
+    public void printSolution() {
+        int[][][] output = new int[8][5][33];
+        int fieldsFilled = 0;
+        for (int i = 0; i < solutionStack.size(); i++) {
+            Node n = solutionStack.get(i);
+            Node start = n;
+            do {
+                int index = Integer.parseInt(n.getHeader().getName());
+                int identifier = getIdentifier(n.type);
+                int[] coords = getCoordinatesForIndex(index);
+                output[coords[0]][coords[1]][coords[2]] = identifier;
+                fieldsFilled++;
+                n = n.getRightNode();
+            }
+            while (n != start);
+        }
+        System.out.println("Solution found with " + (1320 - fieldsFilled) + " gaps.");
+        Platform.runLater(() -> {
+            GUI.update(output, 50);
+            GUI.updateMax(maxValue);
+        });
+    }
+
     private int getIdentifier(char type) {
         switch (type) {
             case 'A':
                 return 1;
             case 'B':
                 return 2;
-            case'C':
+            case 'C':
                 return 3;
             case 'T':
                 return 1;
             case 'L':
                 return 2;
-            case'P':
+            case 'P':
                 return 3;
             default:
                 return 0;
@@ -227,25 +198,22 @@ public class Search3D {
 
     }
 
-    private void printSolution() {
-        solutionWithoutGaps = new int[8][5][33];
-        for(int i = 0; i < solutionStack.size(); i++) {
-            Node n = solutionStack.get(i);
-            Node start = n;
-            do {
-                int index = Integer.parseInt(n.getHeader().getName());
-                int identifier = getIdentifier(n.type);
-                int[] coords = getCoordinatesForIndex(index);
-                solutionWithoutGaps[coords[0]][coords[1]][coords[2]] = identifier;
-                n = n.getRightNode();
-            }
-            while(n != start);
+    public int getValue(Node n) {
+        switch (n.type) {
+            case 'A':
+                return 3;
+            case 'B':
+                return 4;
+            case 'C':
+                return 5;
+            case 'L':
+                return 3;
+            case 'P':
+                return 4;
+            case 'T':
+                return 5;
+            default:
+                return 0;
         }
-        System.out.println("Found solution with 0 gaps! Value: " + cargo_value);
-
-    }
-
-    public int getMaxValue() {
-        return maxValue;
     }
 }

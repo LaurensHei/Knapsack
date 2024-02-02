@@ -169,20 +169,6 @@ public class ParcelMatrix3D {
         return index;
     }
 
-
-//    public static int[][][] fillBlockWithCoordinates(int[][][] block, int offsetHeight, int offsetWidth, int offsetDepth) {
-//        int[][][] result = block.clone();
-//
-//        for (int i = 0; i < result.length; i++) {
-//            for (int j = 0; j < result[i].length; j++) {
-//                for (int k = 0; k < result[i][j].length; k++) {
-//                    result[i][j][k] = field[offsetHeight + i][offsetWidth + j][offsetDepth + k];
-//                }
-//            }
-//        }
-//        return result;
-//    }
-
     public int[] blockToCoordinates(int[][][] block, int offsetHeight, int offsetWidth, int offsetDepth) {
         int[] result = new int[block.length * block[0].length * block[0][0].length];
 

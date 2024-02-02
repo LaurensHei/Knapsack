@@ -30,6 +30,7 @@ public class PentominoMatrix3D {
         initPentominoes();
         addNodes();
     }
+
     private void addNodes() {
         //set our current pointer to the first column (starting from the left)
         current = root.getRightNode();
@@ -129,18 +130,14 @@ public class PentominoMatrix3D {
     private void initPentominoes() {
         this.pentominoes = new ArrayList<>();
 
-
-
-
-
         for (int i = 0; i < ParcelList.tPentominoes.length; i++) {
-            this.pentominoes.add(new nl.group37.algorithm.pent3d.Pentomino('T',ParcelList.tPentominoes[i]));
+            this.pentominoes.add(new Pentomino('T', ParcelList.tPentominoes[i]));
         }
         for (int i = 0; i < ParcelList.pPentominoes.length; i++) {
-            this.pentominoes.add(new Pentomino('P',ParcelList.pPentominoes[i]));
+            this.pentominoes.add(new Pentomino('P', ParcelList.pPentominoes[i]));
         }
         for (int i = 0; i < ParcelList.lPentominoes.length; i++) {
-            this.pentominoes.add(new Pentomino('L',ParcelList.lPentominoes[i]));
+            this.pentominoes.add(new Pentomino('L', ParcelList.lPentominoes[i]));
         }
 
 
@@ -167,10 +164,8 @@ public class PentominoMatrix3D {
         for (int i = 0; i < block.length; i++) {
             for (int j = 0; j < block[i].length; j++) {
                 for (int k = 0; k < block[i][j].length; k++) {
-                    if(block[i][j][k] != 1)
-                        continue;
+                    if (block[i][j][k] != 1) continue;
                     result[index] = field[offsetHeight + i][offsetWidth + j][offsetDepth + k];
-                    //System.out.println(result[index]);
                     index++;
                 }
             }
@@ -181,6 +176,4 @@ public class PentominoMatrix3D {
     public Node getRoot() {
         return root;
     }
-
-
 }

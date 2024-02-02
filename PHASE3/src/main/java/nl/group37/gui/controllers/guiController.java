@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 import nl.group37.algorithm.Search3D;
@@ -15,10 +14,8 @@ import nl.group37.algorithm.matrix.ParcelMatrix3D;
 import nl.group37.algorithm.matrix.PentominoMatrix3D;
 import nl.group37.gui.GUI;
 
-public class guiController {
-    
-    @FXML
-    Pane guiPane;
+public class GUIController {
+
     @FXML
     Label testLabel, valueLabel;
 
@@ -39,11 +36,10 @@ public class guiController {
     }
 
     @FXML
-    private void runAlgorithm(ActionEvent e) {
-        //testLabel.setText("Running the algorithm");
+    private void runPentominoSolver(ActionEvent e) {
         System.out.println("solving...");
-        
-        if(gui.started)
+
+        if (gui.started)
             return;
         gui.started = true;
 
@@ -53,20 +49,16 @@ public class guiController {
         m.buildMatrix();
 
         System.out.println("Matrix built in " + (System.currentTimeMillis() - time));
-        Search3D parcelSearch = new Search3D(m.getRoot());
-        //parcelSearch.search();
-        //System.out.println(Colors.RESET + "Found in " + (System.currentTimeMillis() - time));
+        Search3D pentominoSearch = new Search3D(m.getRoot());
 
-        new Thread(parcelSearch::search).start();
-        //testLabel.setText("Done");
+        new Thread(pentominoSearch::search).start();
     }
 
     @FXML
-    private void runAlgorithm2(ActionEvent e) {
-        //testLabel.setText("Running the algorithm");
+    private void runParcelSolver(ActionEvent e) {
         System.out.println("solving...");
-        
-        if(gui.started)
+
+        if (gui.started)
             return;
         gui.started = true;
 
@@ -77,11 +69,8 @@ public class guiController {
 
         System.out.println("Matrix built in " + (System.currentTimeMillis() - time));
         Search3D parcelSearch = new Search3D(m.getRoot());
-        //parcelSearch.search();
-        //System.out.println(Colors.RESET + "Found in " + (System.currentTimeMillis() - time));
 
         new Thread(parcelSearch::search).start();
-        //testLabel.setText("Done");
     }
 
     @FXML
@@ -92,30 +81,17 @@ public class guiController {
     }
 
     @FXML
-    private void method1(ActionEvent e) {
-        if (gui.s4) {
-            for(int i =0;i<=5;i++){
-            GUI.update(Search3D.output1,50*i);
-            gui.s4 = false;
-            }
-        } else if (!gui.s4) {
-            GUI.update(Search3D.output1,50);
-            gui.s4 = true;
-        }
+    private void blue(ActionEvent e) {
+        gui.toggleBlueBlocks();
     }
 
     @FXML
-    private void method2(ActionEvent e) {
-        gui.toggleColor1();
+    private void red(ActionEvent e) {
+        gui.toggleRedBlocks();
     }
 
     @FXML
-    private void method3(ActionEvent e) {
-        gui.toggleColor2();
-    }
-
-    @FXML
-    private void method4(ActionEvent e) {
-        gui.toggleColor3();
+    private void green(ActionEvent e) {
+        gui.toggleGreenBlocks();
     }
 }
