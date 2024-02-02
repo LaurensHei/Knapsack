@@ -9,7 +9,7 @@ import java.util.List;
 public class PentominoMatrix3D {
     private int[][][] field;
     List<Pentomino> pentominoes;
-    private Node root;
+    private final Node root;
     private Node current;
 
     public PentominoMatrix3D(int height, int width, int depth) {
@@ -59,14 +59,12 @@ public class PentominoMatrix3D {
     }
 
     private void addRow(char identifier, int[] columns) {
-        //int columnIndex = -1;
         Node next = root;
 
         Node first = new Node();
         Node c = new Node();
         while (next.rightNode != root) {
             next = next.rightNode;
-            //columnIndex++;
 
             //loop columns and check if next is equal to column
             for (int column : columns) {
@@ -143,7 +141,7 @@ public class PentominoMatrix3D {
 
     }
 
-    private int fillField() {
+    private void fillField() {
         //fill field
         int index = 0;
         for (int i = 0; i < field.length; i++) {
@@ -154,7 +152,6 @@ public class PentominoMatrix3D {
                 }
             }
         }
-        return index;
     }
 
     public int[] blockToCoordinates(int[][][] block, int offsetHeight, int offsetWidth, int offsetDepth) {

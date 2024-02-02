@@ -7,11 +7,10 @@ import java.util.List;
 
 public class ParcelMatrix3D {
 
-
     private int[][][] field;
     List<Parcel> parcels;
 
-    private Node root;
+    private final Node root;
     private Node current;
 
     public ParcelMatrix3D(int height, int width, int depth) {
@@ -71,14 +70,12 @@ public class ParcelMatrix3D {
     }
 
     private void addRow(char identifier, int[] columns) {
-        //int columnIndex = -1;
         Node next = root;
 
         Node first = new Node();
         Node c = new Node();
         while (next.rightNode != root) {
             next = next.rightNode;
-            //columnIndex++;
 
             //loop columns and check if next is equal to column
             for (int column : columns) {
@@ -86,7 +83,6 @@ public class ParcelMatrix3D {
 
                     //next is equal to a column in our list columns[]
                     Node n = new Node();
-
                     //check if first exist, if not, set first and current to n
                     if (first.rightNode == null) {
                         first = n;
@@ -155,7 +151,7 @@ public class ParcelMatrix3D {
     }
 
 
-    private int fillField() {
+    private void fillField() {
         //fill field
         int index = 0;
         for (int i = 0; i < field.length; i++) {
@@ -166,7 +162,6 @@ public class ParcelMatrix3D {
                 }
             }
         }
-        return index;
     }
 
     public int[] blockToCoordinates(int[][][] block, int offsetHeight, int offsetWidth, int offsetDepth) {
@@ -177,7 +172,6 @@ public class ParcelMatrix3D {
             for (int j = 0; j < block[i].length; j++) {
                 for (int k = 0; k < block[i][j].length; k++) {
                     result[index] = field[offsetHeight + i][offsetWidth + j][offsetDepth + k];
-                    //System.out.println(result[index]);
                     index++;
                 }
             }

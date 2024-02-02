@@ -22,10 +22,10 @@ public class GUI {
 
     static GUIController controller;
 
-    static SmartGroup group;
-    static SmartGroup group1;
-    static SmartGroup group2;
-    static SmartGroup group3;
+    static Group group;
+    static Group blueGroup;
+    static Group redGroup;
+    static Group greenGroup;
 
     private double anchorX, anchorY;
     private double anchorAngleX = 0;
@@ -35,53 +35,59 @@ public class GUI {
 
     public boolean started;
 
-    public static void updateMax(int i) {
-        controller.updateValue(i+"");
+    public static void updateStats(int cargoValue, int gaps, long time) {
+        controller.updateStats(cargoValue, gaps, time);
     }
 
      public static void update(int[][][] grid,int scale) {
 
-        group1.getChildren().clear();
-        group2.getChildren().clear();
-        group3.getChildren().clear();
+        blueGroup.getChildren().clear();
+        redGroup.getChildren().clear();
+        greenGroup.getChildren().clear();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 for (int k = 0; k < grid[i][j].length; k++) {
-                    if (grid[i][j][k] == 1) {
 
-                        Box box = createBlueBox();
-                        group1.getChildren().add(box);
-                        box.translateXProperty().set(scale * i - (50 * grid.length) / 2);
-                        box.translateYProperty().set(scale * j - (50 * grid[i].length) / 2);
-                        box.translateZProperty().set(scale * k);
-                    }
-                    if (grid[i][j][k] == 2) {
-                        Box box = createRedBox();
-                        group2.getChildren().add(box);
-                        box.translateXProperty().set(scale * i - (50 * grid.length) / 2);
-                        box.translateYProperty().set(scale * j - (50 * grid[i].length) / 2);
-                        box.translateZProperty().set(scale * k);
-                    }
-                    if (grid[i][j][k] == 3) {
-                        Box box = createGreenBox();
-                        group3.getChildren().add(box);
-                        box.translateXProperty().set(scale * i - (50 * grid.length) / 2);
-                        box.translateYProperty().set(scale * j - (50 * grid[i].length) / 2);
-                        box.translateZProperty().set(scale * k);
-                    }
+                    int color = grid[i][j][k];
+                    if (color < 1 || color > 3)
+                        continue;
+                    Box box = createBox(color);
+
+                    box.translateXProperty().set(scale * i - (double) (50 * grid.length) / 2);
+                    box.translateYProperty().set(scale * j - (double) (50 * grid[i].length) / 2);
+                    box.translateZProperty().set(scale * k);
                 }
             }
         }
     }
 
+    private static Box createBox(int color) {
+        Box box = new Box(50, 50, 50);
+        switch (color){
+            case 1: //blue
+                box.setMaterial(new PhongMaterial(new Color(.1,.7, 1, .6)));
+                blueGroup.getChildren().add(box);
+                break;
+            case 2: //red
+                box.setMaterial(new PhongMaterial(new Color(.7, 0, 0, .6)));
+                redGroup.getChildren().add(box);
+                break;
+            case 3: //green
+                box.setMaterial(new PhongMaterial(new Color(.1, .9, .1, .6)));
+                greenGroup.getChildren().add(box);
+                break;
+        }
+        return box;
+    }
+
     public void toggleBlueBlocks(){
-        group1.setVisible(!group1.isVisible());
+        blueGroup.setVisible(!blueGroup.isVisible());
     }
     public void toggleRedBlocks(){  //red
-        group2.setVisible(!group2.isVisible());
+        redGroup.setVisible(!redGroup.isVisible());
     }
     public void toggleGreenBlocks(){
-        group3.setVisible(!group3.isVisible());
+        greenGroup.setVisible(!greenGroup.isVisible());
     }
 
     public Scene getScene() {
@@ -90,13 +96,13 @@ public class GUI {
         this.started = false;
         // Create box
         // Prepare transformable Group container
-        group = new SmartGroup();
-        group1 = new SmartGroup();
-        group.getChildren().add(group1);
-        group2 = new SmartGroup();
-        group.getChildren().add(group2);
-        group3 = new SmartGroup();
-        group.getChildren().add(group3);
+        group = new Group();
+        blueGroup = new Group();
+        group.getChildren().add(blueGroup);
+        redGroup = new Group();
+        group.getChildren().add(redGroup);
+        greenGroup = new Group();
+        group.getChildren().add(greenGroup);
 
         update(new int[33][5][8],50);
 
@@ -106,9 +112,7 @@ public class GUI {
         c.translateYProperty().set(-WIDTH/2+500);
         c.translateXProperty().set(-HEIGHT +450);
 
-
         FXMLLoader loader = new FXMLLoader(App.class.getResource("GUI.fxml"));
-
 
         Parent r;
         try {
@@ -120,7 +124,6 @@ public class GUI {
 
         Pane mainPane = (Pane) ((AnchorPane) loader.getRoot()).getChildren().get(0);
         Pane guiPane = (Pane) mainPane.getChildren().get(mainPane.getChildren().size()-1);
-
 
         Scene s = new Scene(r);
 
@@ -134,7 +137,7 @@ public class GUI {
         return s;
     }
 
-    private void initMouseControl(SmartGroup group, Scene scene) {
+    private void initMouseControl(Group group, Scene scene) {
         Rotate xRotate;
         Rotate yRotate;
         group.getTransforms().addAll(
@@ -155,25 +158,6 @@ public class GUI {
             angleX.set(anchorAngleX - (anchorY - event.getSceneY()));
             angleY.set(anchorAngleY + anchorX - event.getSceneX());
         });
-    }
-
-    private static Box createBlueBox() {
-        Box box = new Box(50, 50, 50);
-        box.setMaterial(new PhongMaterial(new Color(.1,.7, 1, .6)));
-        return box;
-    }
-
-
-    private static Box createRedBox() {
-        Box box = new Box(50, 50, 50);
-        box.setMaterial(new PhongMaterial(new Color(.7, 0, 0, .6)));
-        return box;
-    }
-
-    private static Box createGreenBox() {
-        Box box = new Box(50, 50, 50);
-        box.setMaterial(new PhongMaterial(new Color(.1, .9, .1, .6)));
-        return box;
     }
 }
 

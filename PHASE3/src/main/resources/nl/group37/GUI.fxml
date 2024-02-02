@@ -7,14 +7,33 @@
 
 <AnchorPane prefHeight="498.0" prefWidth="883.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.group37.gui.controllers.GUIController">
    <children>
-      <Pane prefHeight="498.0" prefWidth="883.0">
+      <Pane prefHeight="600.0" prefWidth="883.0">
          <children>
-            <ImageView fitHeight="545.0" fitWidth="886.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/background.jpg" />
-               </image>
-            </ImageView>
-            <ButtonBar layoutX="72.0" layoutY="10.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="883.0">
+             <ImageView fitHeight="610.0" fitWidth="1082.0" layoutX="-189.0" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@images/background.jpg" />
+                 </image>
+             </ImageView>
+            <ButtonBar buttonMinWidth="100.0" layoutX="50.0" layoutY="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="49.0" prefWidth="500.0">
+               <buttons>
+                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#runParcelSolver" text="Parcels">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#runPentominoSolver" text="Pentominoes">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+               </buttons>
+            </ButtonBar>
+            <ButtonBar buttonMinWidth="100.0" layoutX="50.0" layoutY="60.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="49.0" prefWidth="500.0">
               <buttons>
                   <Button mnemonicParsing="false" onAction="#green" text="Green">
                       <font>
@@ -31,32 +50,24 @@
                           <Font name="Arial" size="13.0" />
                       </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font></Button>
-                  <Button mnemonicParsing="false" onAction="#runParcelSolver" text="Parcels">
-                      <font>
-                          <Font name="Arial" size="13.0" />
-                      </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#runPentominoSolver" text="Pentominoes">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font></Button>
               </buttons>
             </ButtonBar>
-            <Label fx:id="testLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="667.0" layoutY="3.0" prefHeight="53.0" prefWidth="213.0" text="Label" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="valueLabel" layoutX="60.0" layoutY="470.0" prefHeight="17.0" prefWidth="257.0" text="Total value" textFill="WHITE" visible="true">
+            <Label fx:id="cargoValueLabel" layoutX="500.0" layoutY="30.0" prefHeight="18.0" prefWidth="152.0" text="Cargo Value" textFill="WHITE" visible="true">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <Pane layoutX="32.0" layoutY="64.0" prefHeight="400.0" prefWidth="818.0" />
+            <Label fx:id="gapsLabel" layoutX="500.0" layoutY="70.0" prefHeight="18.0" prefWidth="152.0" text="Gaps" textFill="WHITE" visible="true">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="timeLabel" layoutX="700.0" layoutY="30.0" prefHeight="18.0" prefWidth="152.0" text="Time" textFill="WHITE" visible="true">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Label>
+            <Pane layoutX="40.0" layoutY="150.0" prefHeight="400.0" prefWidth="818.0" />
          </children>
       </Pane>
    </children>

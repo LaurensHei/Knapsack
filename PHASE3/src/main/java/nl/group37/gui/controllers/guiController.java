@@ -17,7 +17,7 @@ import nl.group37.gui.GUI;
 public class GUIController {
 
     @FXML
-    Label testLabel, valueLabel;
+    Label cargoValueLabel, gapsLabel, timeLabel;
 
     private GUI gui;
 
@@ -27,12 +27,15 @@ public class GUIController {
 
         Font font = Font.loadFont(new FileInputStream(new File("PHASE3/src/main/resources/n" + //
                 "l/group37/CheapPotatoesBlack.ttf")), 10);
-        testLabel.setFont(font);
-        valueLabel.setFont(font);
+        cargoValueLabel.setFont(font);
+        gapsLabel.setFont(font);
+        timeLabel.setFont(font);
     }
 
-    public void updateValue(String value) {
-        valueLabel.setText("Total Value: " + value);
+    public void updateStats(int cargoValue, int gaps, long time) {
+        cargoValueLabel.setText("Cargo Value: " + cargoValue);
+        gapsLabel.setText("Gaps: " + gaps);
+        timeLabel.setText("Time: "+ time + "ms.");
     }
 
     @FXML

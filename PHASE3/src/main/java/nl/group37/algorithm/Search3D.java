@@ -13,6 +13,7 @@ public class Search3D {
     private boolean done;
     private int cargoValue;
     private int maxValue;
+    private long time;
 
 
     public Search3D(Node root) {
@@ -21,6 +22,7 @@ public class Search3D {
         this.done = false;
         this.cargoValue = 0;
         this.maxValue = 0;
+        this.time = System.currentTimeMillis();
     }
 
 
@@ -163,10 +165,11 @@ public class Search3D {
             }
             while (n != start);
         }
-        System.out.println("Solution found with " + (1320 - fieldsFilled) + " gaps.");
+        int gaps = 1320 - fieldsFilled;
+        System.out.println("Solution found with " + gaps + " gaps.");
         Platform.runLater(() -> {
             GUI.update(output, 50);
-            GUI.updateMax(maxValue);
+            GUI.updateStats(maxValue, gaps, (System.currentTimeMillis() - time));
         });
     }
 
