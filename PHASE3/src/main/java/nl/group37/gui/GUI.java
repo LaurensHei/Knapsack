@@ -1,5 +1,8 @@
 package nl.group37.gui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
+import javafx.util.Duration;
 import nl.group37.App;
 import nl.group37.gui.controllers.GUIController;
 
@@ -106,11 +111,15 @@ public class GUI {
 
         update(new int[33][5][8],50);
 
-        Camera c = new PerspectiveCamera();
+        PerspectiveCamera c = new PerspectiveCamera();
 
-        c.translateZProperty().set(-2500);
-        c.translateYProperty().set(-WIDTH/2+500);
-        c.translateXProperty().set(-HEIGHT +450);
+
+//        c.translateZProperty().set(-2500);
+//        c.translateYProperty().set(-WIDTH/2+500);
+//        c.translateXProperty().set(-HEIGHT +450);
+        group.translateXProperty().set(WIDTH);
+        group.translateYProperty().set(HEIGHT);
+        group.translateZProperty().set(3000);
 
         FXMLLoader loader = new FXMLLoader(App.class.getResource("GUI.fxml"));
 
@@ -141,11 +150,12 @@ public class GUI {
         Rotate xRotate;
         Rotate yRotate;
         group.getTransforms().addAll(
-                xRotate = new Rotate(0, group.getLayoutBounds().getCenterX(), group.getLayoutBounds().getCenterY(), group.getLayoutBounds().getCenterZ(), Rotate.X_AXIS),
-                yRotate = new Rotate(0,group.getLayoutBounds().getCenterX(), group.getLayoutBounds().getCenterY(), group.getLayoutBounds().getCenterZ(), Rotate.Y_AXIS)
+                xRotate = new Rotate(0, Rotate.X_AXIS),
+                yRotate = new Rotate(0, Rotate.Y_AXIS)
         );
         xRotate.angleProperty().bind(angleX);
         yRotate.angleProperty().bind(angleY);
+        
 
         scene.setOnMousePressed(event -> {
             anchorX = event.getSceneX();
